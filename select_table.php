@@ -1,14 +1,16 @@
 <?php 
 include_once ('header/header.php'); 
-$select_bdd = $_GET['bdd'];
 
+//MYSQL
+$select_bdd = $_GET['bdd'];
+/*
 //Connection à la BDD 
 $bdd = mysqli_connect("localhost", "root","",$select_bdd);
 
 $sql = "SELECT TABLE_NAME 
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$select_bdd'";
-
+WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$select_bdd'";*/
+$pdo->select_db( "$select_bdd" );
 
 ?>
 <table class="table table-striped table-bordered">
@@ -24,9 +26,12 @@ WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$select_bdd'";
 
 	<tbody>
 	<?php
-	$getTable = mysqli_query($bdd,$sql);
+	//$getTable = mysqli_query($bdd,$sql);
+	$sql = $pdo->query("SELECT TABLE_NAME 
+						FROM INFORMATION_SCHEMA.TABLES
+						WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$select_bdd'");
 
-	while($row = mysqli_fetch_assoc($getTable)){
+	while($row = $sql->fetch()){
 	?>
 		<tr>
 			<td ><?php echo($row['TABLE_NAME']); ?> </td>

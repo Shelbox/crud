@@ -12,10 +12,8 @@ $getData = mysqli_query($bdd,$sql_get_columns);
 
 while ($row = mysqli_fetch_assoc($getData))
 {
-	$array_info_column[] = $row;
 	$array_header[] = $row['Field'];
 }
-var_dump($array_info_column);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
@@ -289,6 +287,15 @@ $(document).ready(function () {
 
 function getFields($array_info_column)
 {
+
+	$sql_get_columns = "SHOW COLUMNS FROM $select_table";
+	$getData = mysqli_query($bdd,$sql_get_columns);
+
+	while ($row = mysqli_fetch_assoc($getData))
+	{
+		$array_info_column[] = $row;
+	}
+
 	 foreach($array_info_column as $row => $innerArray)
     {
         foreach($innerArray as $innerRow => $value)

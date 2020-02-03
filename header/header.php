@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<!-- DataTable / Jquery / Bootstrap -->
 	    <script type="text/javascript" src='https://code.jquery.com/jquery-3.3.1.js'></script>
+	    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	    <script type="text/javascript" src='https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
 	    <script type="text/javascript" src='https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js'></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,3 +14,23 @@
 	    <!-- For icons -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head> 
+
+<?php
+
+function connect_db($host,$login,$pwd)
+{
+  
+    try {
+        $dsn = "mysql:host=" . $host . ";charset=utf8";
+        $pdo = new PDO ( $dsn, $login, $pwd );
+        return $pdo;
+    } 
+    catch ( PDOException $e ) 
+    {
+            echo "Erreur !: " . $e->getMessage () . "<br/>";
+            die ();
+    }
+    
+}
+
+?>
