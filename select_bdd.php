@@ -1,10 +1,8 @@
 <?php 
 include_once ('header/header.php'); 
 
-$host=$_POST['host'];
-$login= $_POST['login'];
-$pwd=$_POST['password'];
-$pdo = connect_db($host,$login,$pwd);
+conf_db($_POST);
+$pdo = pdo();
 
 //Connection aux BDD (permettant de lister les BDDs)
 //$bdd = mysqli_connect("localhost", "root","","");
@@ -34,7 +32,7 @@ $pdo = connect_db($host,$login,$pwd);
 	?>
 		<tr>
 			<td><?php echo($row['Database']); ?> </td>
-			<td><a href="select_table.php?bdd=<?=$row['Database'];?>"/>Accès</td>
+			<td><a href="select_table.php?db=<?=$row['Database'];?>"/>Accès</td>
 		</tr>
 	<?php
 	}

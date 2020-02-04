@@ -1,8 +1,12 @@
 <?php 
 include_once ('header/header.php'); 
-
 //MYSQL
-$select_bdd = $_GET['bdd'];
+conf_db($_GET,FALSE);
+
+$pdo = pdo(); 
+echo "1";
+//$pdo->query( "use $conf['db']" );
+echo "2";
 /*
 //Connection à la BDD 
 $bdd = mysqli_connect("localhost", "root","",$select_bdd);
@@ -10,7 +14,7 @@ $bdd = mysqli_connect("localhost", "root","",$select_bdd);
 $sql = "SELECT TABLE_NAME 
 FROM INFORMATION_SCHEMA.TABLES
 WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$select_bdd'";*/
-$pdo->select_db( "$select_bdd" );
+
 
 ?>
 <table class="table table-striped table-bordered">

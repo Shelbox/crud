@@ -16,6 +16,22 @@
 	</head> 
 
 <?php
+function pdo()
+{
+	$conf = parse_ini_file ("header/DB.ini");
+	
+	if (isset($conf['db'])) 
+	{
+		$db = '";dbname='.$conf['db'].'";';
+		$host = $conf['host'].$db;
+		$pdo = connect_db($host,$conf['login'],$conf['password']);
+	}
+	else
+		$pdo = connect_db($host,$conf['login'],$conf['password']);
+	
+	
+	return $pdo;
+}
 
 function connect_db($host,$login,$pwd)
 {
@@ -31,6 +47,43 @@ function connect_db($host,$login,$pwd)
             die ();
     }
     
+}
+
+function conf_db($data, $clean_file=TRUE)
+{
+	$path = "header/DB.ini";
+	var_dump($data);
+	
+	if ($clean_file) 
+	{
+			$file = fopen($path, "w");
+		
+			foreach ($data as $key => $value) 
+			{
+				if($key == "host")
+				{
+					fwrite($file, "host ='".$value."'\n");
+				}
+				else if($key == "password")
+				{
+					fwrite($file, "password ='".$value."'\n");
+				}
+				else if($key == "login")
+				{
+					fwrite($file, "login ='".$value."'\n");
+				}
+				
+			}
+
+			fclose($file);
+	}
+	else if (!$clean_file)
+	{
+		$file = fopen($path, "a");
+		fwrite($file, "db ='".$data['db']."'\n");
+		fclose($file);
+	}
+
 }
 
 ?>
