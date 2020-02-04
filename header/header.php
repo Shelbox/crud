@@ -22,8 +22,9 @@ function pdo()
 	
 	if (isset($conf['db'])) 
 	{
-		$db = '";dbname='.$conf['db'].'";';
+		$db = ";dbname=".$conf['db'];
 		$host = $conf['host'].$db;
+
 		$pdo = connect_db($host,$conf['login'],$conf['password']);
 	}
 	else
@@ -52,8 +53,7 @@ function connect_db($host,$login,$pwd)
 function conf_db($data, $clean_file=TRUE)
 {
 	$path = "header/DB.ini";
-	var_dump($data);
-	
+
 	if ($clean_file) 
 	{
 			$file = fopen($path, "w");

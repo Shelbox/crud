@@ -1,12 +1,13 @@
 <?php 
 include_once ('header/header.php'); 
-//MYSQL
+
 conf_db($_GET,FALSE);
+$db = $_GET['db'];
 
 $pdo = pdo(); 
-echo "1";
+
 //$pdo->query( "use $conf['db']" );
-echo "2";
+
 /*
 //Connection à la BDD 
 $bdd = mysqli_connect("localhost", "root","",$select_bdd);
@@ -33,13 +34,16 @@ WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$select_bdd'";*/
 	//$getTable = mysqli_query($bdd,$sql);
 	$sql = $pdo->query("SELECT TABLE_NAME 
 						FROM INFORMATION_SCHEMA.TABLES
-						WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$select_bdd'");
+						WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='$db'");
 
 	while($row = $sql->fetch()){
 	?>
 		<tr>
 			<td ><?php echo($row['TABLE_NAME']); ?> </td>
-			<td align="middle"><a href="action_on_table.php?bdd=<?=$select_bdd?>&table=<?=$row['TABLE_NAME'];?>" />Selectionner</td>
+			<td align="middle">
+				<a href="action_on_table.php?bdd=<?=$db?>&table=<?=$row['TABLE_NAME'];?>" />
+				Selectionner
+			</td>
 		</tr>
 	<?php
 	}
