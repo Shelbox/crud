@@ -1,45 +1,39 @@
 <?php 
 include_once ('header/header.php'); 
 
-//Get column table
-$select_bdd = $_GET['bdd'];
 $select_table = $_GET['table'];
 
-$bdd = mysqli_connect("localhost", "root","",$select_bdd);
+$pdo = pdo();
+$sql_get_columns = $pdo->query("SHOW COLUMNS FROM $select_table");
 
-$sql_get_columns = "SHOW COLUMNS FROM $select_table";
-$getData = mysqli_query($bdd,$sql_get_columns);
-
-while ($row = mysqli_fetch_assoc($getData))
+while ($row = $sql_get_columns->fetch())
 {
 	$array_header[] = $row['Field'];
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
 <table id="tab" class="table table-striped table-bordered" style="width:100%">
 	<thead>
-	<?php 
-	foreach ($array_header as $column) 
-	{ ?>
-		<th>
-			<?=$column;?>
-		</th>
-<?php } ?>
-		<th>
-			Modifier
-		</th>
-		<th>
-			Supprimer
-		</th>
+			<?php 
+			foreach ($array_header as $column) 
+			{ ?>
+			<th>
+				<?=$column;?>
+			</th>
+   	<?php   } ?>
+			<th>
+				Modifier
+			</th>
+			<th>
+				Supprimer
+			</th>
 	</thead>
 	<tbody>
 		<?php
 		//Get data table
-		$sql_get_data = "SELECT * FROM $select_table LIMIT 100";
-		$getData = mysqli_query($bdd,$sql_get_data);
+		$sql_get_data = $pdo->query("SELECT * FROM $select_table");
 
-		while($row = mysqli_fetch_assoc($getData))
+		while($row = $sql_get_data->fetch(PDO::FETCH_ASSOC))
 		{ ?>
 			<tr>
 	<?php	$trigger_to_get_id = 0;
@@ -78,9 +72,7 @@ while ($row = mysqli_fetch_assoc($getData))
     
 
 			</tr>
-<?php } 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-?>
+<?php } ?>
 	</tbody> 
 </table>
 <button class="btn btn-primary btn-md" onclick='GetModalCreate(<?=$ligne_data_js?>);'>Ajouter
@@ -141,8 +133,6 @@ include ('modal/create.php');
 	//Create sql request => Ajax update
 	function submit_update_data()
 	{
-		var bdd = "<?=$select_bdd?>";
-		console.log(bdd);
 		var fields = <?php echo json_encode($array_header); ?>;
 		var sql = "UPDATE <?=$select_table?> "
 					+"SET ";
@@ -167,8 +157,7 @@ include ('modal/create.php');
       	url: "controller/mod_data.php",
 	      method:"POST",
 	      data:{ 
-	      	sql : sql,
-	      	bdd : bdd
+	      	sql : sql
 	      },
 	      cache:false,
 	      success:function(data)
@@ -190,10 +179,9 @@ include ('modal/create.php');
 	//Create sql request => Ajax update
 	function submit_delete_data()
 	{
-		var bdd = "<?=$select_bdd?>";	
 		var fields = <?php echo json_encode($array_header); ?>;
 		var id_value = $("[id='"+fields[0]+"']").val();
-		console.log(bdd);
+		
 		var sql = "DELETE FROM <?=$select_table?> "
 					+"WHERE "
 					+fields[0]+" ='"+id_value+"'";
@@ -204,8 +192,7 @@ include ('modal/create.php');
       	url: "controller/mod_data.php",
 	      method:"POST",
 	      data:{ 
-	      	sql : sql,
-	      	bdd : bdd
+	      	sql : sql
 	      },
 	      cache:false,
 	      success:function(data)
@@ -230,8 +217,6 @@ include ('modal/create.php');
 
 		var fields = <?php echo json_encode($array_header); ?>;
 
-		var bdd = "<?=$select_bdd?>";	
-		console.log(bdd);
 		var sql = "INSERT INTO <?=$select_table?> VALUES(";
 
 		var i = 0;
@@ -252,8 +237,7 @@ include ('modal/create.php');
       	url: "controller/mod_data.php",
 	      method:"POST",
 	      data:{ 
-	      	sql : sql,
-	      	bdd : bdd
+	      	sql : sql
 	      },
 	      cache:false,
 	      success:function(data)

@@ -18,7 +18,7 @@
 <?php
 function pdo()
 {
-	$conf = parse_ini_file ("header/DB.ini");
+	$conf = parse_ini_file ("DB.ini");
 	
 	if (isset($conf['db'])) 
 	{
