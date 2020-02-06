@@ -28,7 +28,7 @@ function pdo()
 		$pdo = connect_db($host,$conf['login'],$conf['password']);
 	}
 	else
-		$pdo = connect_db($host,$conf['login'],$conf['password']);
+		$pdo = connect_db($conf['host'],$conf['login'],$conf['password']);
 	
 	
 	return $pdo;
