@@ -2,7 +2,7 @@
 include_once ('header/header.php'); 
 
 conf_db($_POST);
-$pdo = pdo();
+//$pdo = pdo();
 
 //Connection aux BDD (permettant de lister les BDDs)
 //$bdd = mysqli_connect("localhost", "root","","");

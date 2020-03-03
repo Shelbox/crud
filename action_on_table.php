@@ -3,7 +3,7 @@ include_once ('header/header.php');
 
 $select_table = $_GET['table'];
 
-$pdo = pdo();
+//$pdo = pdo();
 $sql_get_columns = $pdo->query("SHOW COLUMNS FROM $select_table");
 
 while ($row = $sql_get_columns->fetch())

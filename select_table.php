@@ -4,7 +4,7 @@ include_once ('header/header.php');
 conf_db($_GET,FALSE);
 $db = $_GET['db'];
 
-$pdo = pdo(); 
+//$pdo = pdo(); 
 
 //$pdo->query( "use $conf['db']" );
 

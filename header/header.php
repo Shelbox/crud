@@ -16,24 +16,6 @@
 	</head> 
 
 <?php
-function pdo()
-{
-	$conf = parse_ini_file ("DB.ini");
-	
-	if (isset($conf['db'])) 
-	{
-		$db = ";dbname=".$conf['db'];
-		$host = $conf['host'].$db;
-
-		$pdo = connect_db($host,$conf['login'],$conf['password']);
-	}
-	else
-		$pdo = connect_db($conf['host'],$conf['login'],$conf['password']);
-	
-	
-	return $pdo;
-}
-
 function connect_db($host,$login,$pwd)
 {
   
@@ -85,5 +67,20 @@ function conf_db($data, $clean_file=TRUE)
 	}
 
 }
+
+$conf = parse_ini_file ("DB.ini");
+	
+if (isset($conf['db'])) 
+{
+	$db = ";dbname=".$conf['db'];
+	$host = $conf['host'].$db;
+
+	$pdo = connect_db($host,$conf['login'],$conf['password']);
+}
+else
+	$pdo = connect_db($conf['host'],$conf['login'],$conf['password']);
+
+
+return $pdo;
 
 ?>
